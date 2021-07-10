@@ -24,6 +24,11 @@ Make sure you have node and npm installed
 
 `python manage.py migrate`
 
+#### Set up the .env file
+
+`cd mysite && cp env-template .env`
+`cd ..`
+
 #### Install node requirements
 
 `cd frontend`
