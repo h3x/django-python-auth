@@ -1,10 +1,29 @@
 import React, {useState, useEffect} from "react";
+import {makeStyles} from '@material-ui/core/styles';
+import {Grid, Paper, Typography, Box, Button} from "@material-ui/core";
+import TextField from '@material-ui/core/TextField';
+import SendIcon from '@material-ui/icons/Send';
+
+const useStyles = makeStyles((theme) => ({
+    root: {
+        flexGrow: 1,
+        overflow: 'hidden',
+        padding: theme.spacing(5, 5),
+    },
+    paper: {
+        maxWidth: 400,
+        margin: `${theme.spacing(1)}px auto`,
+        padding: theme.spacing(5),
+    },
+}));
 
 const Login = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState(false);
     const [loading, setLoading] = useState(true);
+
+    const classes = useStyles();
 
     useEffect(() => {
         if (localStorage.getItem('token') !== null){
@@ -45,30 +64,55 @@ const Login = () => {
     };
 
     return (
-        <div>
-            {loading === false && <h1>Login</h1>}
+            <div className={classes.root}>
+                <Paper className={classes.paper}>
+            {loading === false &&
+            <Typography variant="h4" component="h2">
+              Login
+            </Typography>}
             {errors === true && <h2>Cannot log in with provided credentials</h2>}
             {loading === false && (
-                <form onSubmit={onSubmit}>
-                    <label htmlFor='email'>Email Address:</label><br />
-                    <input
-                        name='email'
-                        type='email'
-                        value={email}
-                        required
-                        onChange={ev => setEmail(ev.target.value)}
-                        />{' '}<br />
-                    <label htmlFor='password'>Password:</label><br />
-                    <input
-                        name='password'
-                        type='password'
-                        value={password}
-                        required
-                        onChange={ev => setPassword(ev.target.value)}
-                        />{' '}<br />
-                    <input type='submit' value='Login'/>
+
+                <form className={classes.root} onSubmit={onSubmit} noValidate autoComplete="off">
+                <Grid item xs>
+                    <Grid item>
+                        <Box mb={2}>
+                            <TextField
+                            id="outlined-basic"
+                            type='email'
+                            name='email'
+                            onChange={ev => setEmail(ev.target.value)}
+                            required
+                            value={email}
+                            label="Email"
+                            variant="outlined" />
+                        </Box>
+
+                    </Grid>
+                    <Grid item>
+                        <Box mb={2}>
+                        <TextField
+                            id="outlined-basic"
+                            type='password'
+                            name='password'
+                            onChange={ev => setPassword(ev.target.value)}
+                            required
+                            value={password}
+                            label="password"
+                            variant="outlined" />
+                        </Box>
+                    </Grid>
+                    <Grid item>
+                        <Box mb={2}>
+                            <Button type='submit' variant="outlined" color="primary">
+                              <SendIcon /> Login
+                            </Button>
+                        </Box>
+                    </Grid>
+                </Grid>
                 </form>
             )}
+      </Paper>
         </div>
     );
 };

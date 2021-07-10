@@ -2,3 +2,8 @@ node_modules/
 .idea
 venv
 db.sqlite3
+.env
+__pycache__/
+**__pycache__/
+*.pyc
+.DS_Store

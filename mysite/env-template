@@ -1,0 +1,4 @@
+SECRET_KEY=place_your_secret_here
+SYNAPSE_API_KEY=place_your_token_here
+SYNAPSE_TOKEN=place_your_token_here
+WEATHER_API_KEY=place_your_key_here

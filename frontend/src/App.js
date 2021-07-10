@@ -5,12 +5,14 @@ import Login from "./views/auth/Login";
 import Signup from "./views/auth/Signup";
 import Logout from "./views/auth/Logout";
 import Dashboard from "./views/app/Dashboard";
+import "./App.scss"
 
 function App() {
     return (
-        <div className="App">
+        <div className="app">
+            <Navbar />
+            <div className="appContent">
             <Router>
-                <Navbar />
                 <Switch>
                     <Route path='/login' component={Login} exact />
                     <Route path='/signup' component={Signup} exact />
@@ -18,6 +20,7 @@ function App() {
                     <Route path='/dashboard' component={Dashboard} exact />
                 </Switch>
             </Router>
+                </div>
         </div>
     )
 }

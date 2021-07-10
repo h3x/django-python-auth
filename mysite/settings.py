@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 from pathlib import Path
+import environ
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -19,8 +20,14 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.2/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-i41wh9%@&#!0%(^acyzt4f5!w+v_0ijzcbp$41=e%f8ijkjj3n'
+# Initialise environment variables
+env = environ.Env()
+environ.Env.read_env()
+
+SECRET_KEY = env('SECRET_KEY')
+SYNAPSE_API_KEY = env('SYNAPSE_API_KEY')
+SYNAPSE_TOKEN = env('SYNAPSE_TOKEN')
+WEATHER_API_KEY = env('WEATHER_API_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -52,6 +59,7 @@ INSTALLED_APPS = [
     # Local Apps
     'users',
     'frontend',
+    'synapse',
 ]
 
 CORS_ALLOWED_ORIGINS = [
