@@ -26,7 +26,7 @@ Make sure you have node and npm installed
 
 #### Set up the .env file
 
-`cd mysite && cp env-template .env`
+`cd mysite && cp envtemplate .env`
 `cd ..`
 
 #### Install node requirements
