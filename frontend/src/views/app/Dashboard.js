@@ -1,6 +1,8 @@
 import React, {useState, useEffect, Fragment} from "react";
 import TimeSeries from "../../components/charts/TimeSeries";
+import TemperateChart from "../../components/charts/TemperateChart";
 import {Grid, makeStyles, Typography, Box} from "@material-ui/core";
+import { useSnackbar } from 'notistack';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -8,6 +10,9 @@ const useStyles = makeStyles((theme) => ({
     },
     timeseries: {
         width: '100%',
+    },
+    row: {
+        marginTop:  theme.spacing(3),
     }
 }));
 
@@ -16,78 +21,123 @@ const Dashboard = () => {
     const [loading, setLoading] = useState(true);
     const [loadingData, setLoadingData] = useState(true);
     const [data, setData] = useState(false);
-
+    const [weatherLoading, setWeatherLoading] = useState(true);
+    const [weatherData, setWeatherData] = useState(false);
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
     const classes = useStyles()
 
     useEffect(() => {
-        console.log('starting')
-       if(localStorage.getItem('token') === null){
-           window.location.replace('http://localhost:8000/login');
-       } else {
-           fetch('http://localhost:8000/api/v1/users/auth/user/', {
-               method: 'GET',
-               headers: {
-                   'Content-Type': 'application/json',
-                   Authorization: `token ${localStorage.getItem('token')}`
-               }
-           })
-               .then(res => res.json())
-               .then( data => {
-                   setLoading(false);
-               });
-       }
+        if (localStorage.getItem('token') === null) {
+            window.location.replace('http://localhost:8000/login');
+        } else {
+            fetch('http://localhost:8000/api/v1/users/auth/user/', {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                    Authorization: `token ${localStorage.getItem('token')}`
+                }
+            })
+                .then(res => {
+                    return res.json()
+                })
+                .then(data => {
+                    setLoading(false);
+                });
+        }
     }, []);
 
-    useEffect(()=> {
-        if(!loading){
+    useEffect(() => {
+        if (loading) {
+            const loadingSnack = enqueueSnackbar('Loading Data...', {variant:"success"});
             fetch('http://127.0.0.1:8000/api/v1/synapse/data/', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
 
-        })
-                .then( res => res.json())
-                .then( data => {
-                    console.log(data)
-                    setData(data)
+            })
+                .then(res => res.json())
+                .then(data => {
+                    setData(data);
                     setLoadingData(false);
+                    closeSnackbar(loadingSnack);
                 })
-                .catch( err => console.error(err))
+                .catch(err => {
+                    enqueueSnackbar('Error Retrieving Synapse Data', {variant:"error"});
+                    closeSnackbar(loadingSnack);
+                })
         }
     }, [loading])
+
+    // Load Weather Data
+    useEffect(() => {
+        if (weatherLoading) {
+            fetch('http://127.0.0.1:8000/api/v1/synapse/weather/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+
+            })
+                .then(res => res.json())
+                .then(data => {
+                    setWeatherData(data);
+                    setWeatherLoading(false)
+                })
+                .catch(err => enqueueSnackbar('Error Retrieving Weather Data', {variant:"error"}))
+        }
+    }, [weatherLoading])
 
 
     return (
         <>
             <Typography variant="h5" component="h5">Time Series Overlay</Typography>
-            <Box >
+            <Box>
                 <Grid container direction="row" item xs={12}>
                     <Grid container item xs={6}>
                         <Grid item className={classes.timeseries}>
-                         <TimeSeries chartData={data} />
-                    </Grid>
-                    </Grid>
-                <Grid container item xs={6}>
-                    <Grid container>
-                        <Grid item>
-                        <TimeSeries chartData={data ? {A: data["A"]}: {}}/>
-                        </Grid>
-                        <Grid item>
-                            <TimeSeries chartData={data ? {B: data["B"]} : {}}/>
+                            <TimeSeries chartData={data}/>
                         </Grid>
                     </Grid>
-                    <Grid container >
-                        <Grid item>
-                            <TimeSeries chartData={data ? {C: data["C"]}: {}}/>
+                    <Grid container item xs={6}>
+                        <Grid container>
+                            <Grid item>
+                                <TimeSeries chartData={data ? {A: data["A"]} : {}}/>
+                            </Grid>
+                            <Grid item>
+                                <TimeSeries chartData={data ? {B: data["B"]} : {}}/>
+                            </Grid>
                         </Grid>
-                        <Grid item>
-                            <TimeSeries chartData={data ? {D: data["D"]} : {}}/>
+                        <Grid container>
+                            <Grid item>
+                                <TimeSeries chartData={data ? {C: data["C"]} : {}}/>
+                            </Grid>
+                            <Grid item>
+                                <TimeSeries chartData={data ? {D: data["D"]} : {}}/>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Box>
+
+            <Box className={classes.row}>
+               <Typography variant="h5" component="h5">Temperature Data: 24H - Armidale</Typography>
+                <Grid container direction="row" item xs={12}>
+                    <Grid container item xs={6}>
+                        <Grid item className={classes.timeseries}>
+                            <TemperateChart chartData={weatherData} />
+                        </Grid>
+                    </Grid>
+                    <Grid container item xs={6}>
+                        <Grid container>
+                            <Box >
+                                <Typography variant="h5" component="h5">Google Map Here</Typography>
+                            </Box>
+
                         </Grid>
                     </Grid>
 
                 </Grid>
-                    </Grid>
             </Box>
 
         </>

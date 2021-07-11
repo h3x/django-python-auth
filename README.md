@@ -12,11 +12,16 @@ Make sure you have node and npm installed
 #### Create your venv and activate
 `python3 -m venv venv`
 
+#### Linux and MacOs
 `source venv/bin/activate`
+
+#### Windows ( git bash )
+`cd venv/Scripts && . activate`
+`cd ../..`
 
 #### Install required packages
 
-`pip install -t requirements.txt`
+`pip install -r requirements.txt`
 
 #### Make migrations and migrate the database
 
@@ -43,7 +48,13 @@ open a new terminal and navigate to the project folder ( this should contain the
 
 activate the venv 
 
+#### Linux and MacOs
 `source venv/bin/activate`
+
+#### Windows ( git bash )
+`cd venv/Scripts && . activate`
+`cd ../..`
+
 
 create a superuser. Follow the prompts
 
@@ -61,8 +72,14 @@ If there is a warning about unapplied migrations, migrate again
 
 
 ## Routes
+#### Backend endpoints
+/data
+
+/weather
+
 /admin
 
+#### Frontend endpoints
 /login
 
 /submit

@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import {Grid, Paper, Typography, Box, Button} from "@material-ui/core";
 import TextField from '@material-ui/core/TextField';
 import SendIcon from '@material-ui/icons/Send';
+import {useSnackbar} from "notistack";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -22,7 +23,7 @@ const Signup = () => {
     const [password2, setPassword2] = useState('');
     const [errors, setErrors] = useState(false);
     const [loading, setLoading] = useState(true);
-
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
     const classes = useStyles();
 
     useEffect(() => {
@@ -56,6 +57,7 @@ const Signup = () => {
                     localStorage.setItem('token', data.key);
                     window.location.replace('http://localhost:8000/dashboard');
                 } else {
+                    enqueueSnackbar('Cannot Sign up with provided credentials.', {variant:"error"});
                     setEmail('');
                     setPassword1('');
                     setPassword2('');
@@ -72,9 +74,8 @@ const Signup = () => {
             <Typography variant="h4" component="h2">
               Signup
             </Typography>}
-            {errors === true && <h2>Cannot Sign up with provided credentials</h2>}
                 <form className={classes.root} onSubmit={onSubmit} noValidate autoComplete="off">
-<Grid item xs>
+                    <Grid item xs>
                     <Grid item>
                         <Box mb={2}>
                             <TextField

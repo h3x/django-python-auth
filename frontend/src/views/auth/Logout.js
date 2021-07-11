@@ -41,7 +41,6 @@ const Logout = () => {
         })
             .then( res => res.json())
             .then(data => {
-                console.log(data);
                 localStorage.clear();
                 window.location.replace('http://localhost:8000/login');
             });

@@ -4,6 +4,8 @@ from mysite.settings import SYNAPSE_TOKEN
 from mysite.settings import WEATHER_API_KEY
 import requests
 import time
+import json
+import datetime
 
 
 class Synapse:
@@ -29,25 +31,35 @@ class Synapse:
         return res_dict
 
 
+def convert_epoch_to_datetime(epoch_time):
+    ts = datetime.datetime.fromtimestamp(epoch_time)
+    return ts.strftime('%d-%m %H:%M')
+
+
 class WeatherAPI():
     def __init__(self,location):
         self.location = location
 
     def get_data(self):
         current_epoch = time.time()
-        five_days_ago = current_epoch - ( 24 * 60 * 60 ) * 5 -200
-        api_endpoint = "https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=%s&lon=%s&dt=%s&appid=%s" % (
+        five_days_ago = int(current_epoch) - ( 24 * 60 * 60 ) * 5 -200
+        api_endpoint = "https://api.openweathermap.org/data/2.5/onecall/timemachine?lat=%s&lon=%s&dt=%s&units=metric&appid=%s" % (
             self.location[0],
             self.location[1],
             five_days_ago,
             WEATHER_API_KEY
         )
         res = requests.get(api_endpoint)
-        return res
-
+        data = res.text
+        try:
+            data = json.loads(data)
+        except: # hack
+            pass
+        time_over_temp = [{'x':i.get('dt', 0) , 'y': i.get('temp', 0)} for i in data.get('hourly',[])]
+        return {'data':time_over_temp}
 
 def weather_data():
-    armidale = (30.50828,151.67123)
+    armidale = (-30.50828,151.67123)
     weather = WeatherAPI(location=armidale)
     data = weather.get_data()
     return data
