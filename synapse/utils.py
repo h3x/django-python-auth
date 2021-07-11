@@ -7,6 +7,7 @@ import time
 import json
 import datetime
 
+SYNAPSE_DOC = 'syn1899498'
 
 class Synapse:
     def __init__(self, dataset_id):
@@ -18,10 +19,16 @@ class Synapse:
     def update_matrix(self):
         self.matrix = self.syn.get(self.dataset_id)
 
-    def get_data(self):
-        exported_table = pandas.read_csv(self.matrix.path, sep='\t')
+    def get_data(self, download_data=False):
+        sep = '\t' if self.matrix.properties.name[-3:] == 'tsv' else ','
+        exported_table = pandas.read_csv(self.matrix.path, sep=sep)
+        if download_data:
+            return exported_table.to_csv()
         shaped_data = self._shape_data(exported_table)
         return shaped_data
+
+    def get_csv(self):
+        return self.get_data(download_data=True)
 
     def _shape_data(self, table):
         data_dict = table.to_dict()
@@ -58,6 +65,7 @@ class WeatherAPI():
         time_over_temp = [{'x':i.get('dt', 0) , 'y': i.get('temp', 0)} for i in data.get('hourly',[])]
         return {'data':time_over_temp}
 
+
 def weather_data():
     armidale = (-30.50828,151.67123)
     weather = WeatherAPI(location=armidale)
@@ -66,6 +74,12 @@ def weather_data():
 
 
 def get_data():
-    syn = Synapse('syn1899498')
+    syn = Synapse(SYNAPSE_DOC)
     data = syn.get_data()
+    return data
+
+
+def download_data():
+    syn = Synapse(SYNAPSE_DOC)
+    data = syn.get_csv()
     return data

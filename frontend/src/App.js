@@ -5,6 +5,7 @@ import Login from "./views/auth/Login";
 import Signup from "./views/auth/Signup";
 import Logout from "./views/auth/Logout";
 import Dashboard from "./views/app/Dashboard";
+import Settings from "./views/app/Settings";
 import "./App.scss"
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
                     <Route path='/signup' component={Signup} exact />
                     <Route path='/logout' component={Logout} exact />
                     <Route path='/dashboard' component={Dashboard} exact />
+                    <Route path='/settings' component={Settings} exact />
                 </Switch>
             </Router>
                 </div>

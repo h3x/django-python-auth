@@ -13,7 +13,7 @@ const useStyles = makeStyles((theme) => ({
     },
     row: {
         marginTop:  theme.spacing(3),
-    }
+    },
 }));
 
 const Dashboard = () => {
@@ -130,8 +130,8 @@ const Dashboard = () => {
                     </Grid>
                     <Grid container item xs={6}>
                         <Grid container>
-                            <Box >
-                                <Typography variant="h5" component="h5">Google Map Here</Typography>
+                            <Box className={classes.map} >
+                                 <Typography variant="h5" component="h5">Google Map Intergration</Typography>
                             </Box>
 
                         </Grid>
@@ -139,6 +139,7 @@ const Dashboard = () => {
 
                 </Grid>
             </Box>
+
 
         </>
     )

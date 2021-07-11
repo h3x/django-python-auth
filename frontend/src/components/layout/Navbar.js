@@ -11,8 +11,12 @@ import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-
+import DashboardIcon from '@material-ui/icons/Dashboard';
+import ExitToAppIcon from '@material-ui/icons/ExitToApp';
+import PersonIcon from '@material-ui/icons/Person';
+import PresentToAllIcon from '@material-ui/icons/PresentToAll';
+import SettingsIcon from '@material-ui/icons/Settings';
+import GetAppIcon from '@material-ui/icons/GetApp';
 
 const drawerWidth = 240;
 
@@ -50,6 +54,21 @@ const Navbar = () => {
         }
     }, [])
 
+    const downloadData = () => {
+        fetch('/api/v1/synapse/download_data/')
+            .then(res => {
+                debugger;
+                res.blob().then(blob => {
+                    let url = window.URL.createObjectURL(blob);
+                    let a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'dataset.csv';
+                    debugger;
+                    a.click();
+                })
+            })
+    }
+
     const classes = useStyles();
 
     return (
@@ -75,21 +94,32 @@ const Navbar = () => {
                 {isAuth === true ? (
                     <List>
                         <ListItem button component="a" href="/dashboard">
-                            <ListItemIcon><InboxIcon/></ListItemIcon>
+                            <ListItemIcon><DashboardIcon/></ListItemIcon>
                             <ListItemText>Dashboard </ListItemText>
                         </ListItem>
+                        <ListItem button component="a" href="/settings">
+                            <ListItemIcon><SettingsIcon/></ListItemIcon>
+                            <ListItemText>Settings </ListItemText>
+                        </ListItem>
                         <ListItem button component="a" href="/logout">
-                            <ListItemIcon><InboxIcon/></ListItemIcon>
+                            <ListItemIcon><ExitToAppIcon/></ListItemIcon>
                             <ListItemText>Logout </ListItemText>
                         </ListItem>
+
+                        <Divider />
+                        <ListItem button component="a" onClick={downloadData}>
+                            <ListItemIcon><GetAppIcon/></ListItemIcon>
+                            <ListItemText>Download Dataset </ListItemText>
+                        </ListItem>
+
                     </List>) : (
                     <Fragment>
                         <ListItem button component="a" href="/login">
-                            <ListItemIcon><InboxIcon/></ListItemIcon>
+                            <ListItemIcon><PersonIcon/></ListItemIcon>
                             <ListItemText>Login </ListItemText>
                         </ListItem>
                         <ListItem button component="a" href="/signup">
-                            <ListItemIcon><InboxIcon/></ListItemIcon>
+                            <ListItemIcon><PresentToAllIcon/></ListItemIcon>
                             <ListItemText>Signup </ListItemText>
                         </ListItem>
                     </Fragment>

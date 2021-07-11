@@ -28,6 +28,7 @@ SECRET_KEY = env('SECRET_KEY')
 SYNAPSE_API_KEY = env('SYNAPSE_API_KEY')
 SYNAPSE_TOKEN = env('SYNAPSE_TOKEN')
 WEATHER_API_KEY = env('WEATHER_API_KEY')
+MAPBOX_API_KEY = env('MAPBOX_API_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
