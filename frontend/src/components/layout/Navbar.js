@@ -17,6 +17,7 @@ import PersonIcon from '@material-ui/icons/Person';
 import PresentToAllIcon from '@material-ui/icons/PresentToAll';
 import SettingsIcon from '@material-ui/icons/Settings';
 import GetAppIcon from '@material-ui/icons/GetApp';
+import { useSnackbar } from 'notistack';
 
 const drawerWidth = 240;
 
@@ -47,6 +48,7 @@ const useStyles = makeStyles((theme) => ({
 
 const Navbar = () => {
     const [isAuth, setIsAuth] = useState(false);
+    const { enqueueSnackbar, closeSnackbar } = useSnackbar();
 
     useEffect(() => {
         if (localStorage.getItem('token') !== null) {
@@ -55,6 +57,7 @@ const Navbar = () => {
     }, [])
 
     const downloadData = () => {
+        const loading = enqueueSnackbar('Preparing your data for download.', {variant:"success"});
         fetch('/api/v1/synapse/download_data/')
             .then(res => {
                 debugger;
@@ -65,6 +68,7 @@ const Navbar = () => {
                     a.download = 'dataset.csv';
                     debugger;
                     a.click();
+                    closeSnackbar(loading)
                 })
             })
     }
