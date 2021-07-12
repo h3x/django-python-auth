@@ -64,9 +64,8 @@ INSTALLED_APPS = [
     'synapse',
 ]
 
-CORS_ALLOWED_ORIGINS = [
-    'https://synapse-test-demo4.herokuapp.com/'
-]
+CORS_ALLOW_ALL_ORIGINS = True
+
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
