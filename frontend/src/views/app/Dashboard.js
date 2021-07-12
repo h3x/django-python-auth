@@ -4,6 +4,8 @@ import TemperateChart from "../../components/charts/TemperateChart";
 import {Grid, makeStyles, Typography, Box} from "@material-ui/core";
 import { useSnackbar } from 'notistack';
 
+const url = window.location.protocol + '//' + window.location.host
+
 const useStyles = makeStyles((theme) => ({
     root: {
         display: 'flex',
@@ -28,9 +30,9 @@ const Dashboard = () => {
 
     useEffect(() => {
         if (localStorage.getItem('token') === null) {
-            window.location.replace('https://synapse-test-demo4.herokuapp.com/login');
+            window.location.replace(`${url}/login`);
         } else {
-            fetch('https://synapse-test-demo4.herokuapp.com/api/v1/users/auth/user/', {
+            fetch('/api/v1/users/auth/user/', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -49,7 +51,7 @@ const Dashboard = () => {
     useEffect(() => {
         if (loading) {
             const loadingSnack = enqueueSnackbar('Loading Data...', {variant:"success"});
-            fetch('https://synapse-test-demo4.herokuapp.com/api/v1/synapse/data/', {
+            fetch('/api/v1/synapse/data/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -72,7 +74,7 @@ const Dashboard = () => {
     // Load Weather Data
     useEffect(() => {
         if (weatherLoading) {
-            fetch('https://synapse-test-demo4.herokuapp.com/api/v1/synapse/weather/', {
+            fetch('/api/v1/synapse/weather/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

@@ -1,10 +1,12 @@
 import React, {useState, useEffect, Fragment} from "react";
 
+const url = window.location.protocol + '//' + window.location.host
+
 const Settings = () => {
 
         useEffect(() => {
             if (localStorage.getItem('token') === null) {
-                window.location.replace('https://synapse-test-demo4.herokuapp.com/login');
+                window.location.replace(`${url}/login`);
             }
         }, [])
 

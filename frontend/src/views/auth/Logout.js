@@ -4,6 +4,8 @@ import {Grid, Paper, Typography, Box, Button} from "@material-ui/core";
 import TextField from '@material-ui/core/TextField';
 import ExitToAppIcon from '@material-ui/icons/ExitToApp';
 
+const url = window.location.protocol + '//' + window.location.host
+
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
@@ -23,7 +25,7 @@ const Logout = () => {
 
     useEffect(() => {
         if (localStorage.getItem('token') == null){
-            window.location.replace('https://synapse-test-demo4.herokuapp.com/login');
+            window.location.replace(`${url}/login`);
         } else {
             setLoading(false);
         }
@@ -32,7 +34,7 @@ const Logout = () => {
     const handleLogout = ev => {
         ev.preventDefault();
 
-        fetch('https://synapse-test-demo4.herokuapp.com/api/v1/users/auth/logout/', {
+        fetch('/api/v1/users/auth/logout/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -42,7 +44,7 @@ const Logout = () => {
             .then( res => res.json())
             .then(data => {
                 localStorage.clear();
-                window.location.replace('https://synapse-test-demo4.herokuapp.com/login');
+                window.location.replace(`${url}/login`);
             });
     };
 

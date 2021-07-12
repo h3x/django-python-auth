@@ -5,6 +5,8 @@ import TextField from '@material-ui/core/TextField';
 import SendIcon from '@material-ui/icons/Send';
 import { useSnackbar } from 'notistack';
 
+const url = window.location.protocol + '//' + window.location.host
+
 const useStyles = makeStyles((theme) => ({
     root: {
         flexGrow: 1,
@@ -29,7 +31,7 @@ const Login = () => {
 
     useEffect(() => {
         if (localStorage.getItem('token') !== null){
-            window.location.replace('https://synapse-test-demo4.herokuapp.com/dashboard');
+            window.location.replace(`${url}/dashboard`);
         } else {
             setLoading(false);
         }
@@ -43,7 +45,7 @@ const Login = () => {
             password: password
         };
 
-        fetch('https://synapse-test-demo4.herokuapp.com/api/v1/users/auth/login/', {
+        fetch('/api/v1/users/auth/login/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -55,7 +57,7 @@ const Login = () => {
                 if(data.key) {
                     localStorage.clear();
                     localStorage.setItem('token', data.key);
-                    window.location.replace('https://synapse-test-demo4.herokuapp.com/dashboard');
+                    window.location.replace(`${url}/dashboard`);
                 } else {
                     enqueueSnackbar('Cannot log in with provided credentials', {variant:"error"});
                     setEmail('');
