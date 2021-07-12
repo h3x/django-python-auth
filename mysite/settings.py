@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 env = environ.Env()
 environ.Env.read_env()
 
-SECRET_KEY = env('SECRET_KEY')
+SECRET_KEY="dsfo09u3242d234wr@!#@@!tewr41wh9%@&#!0%(^acyzt4f5!w+v_0ijzcbp$41=e%f8ijkjj3n"
 SYNAPSE_API_KEY = env('SYNAPSE_API_KEY')
 SYNAPSE_TOKEN = env('SYNAPSE_TOKEN')
 WEATHER_API_KEY = env('WEATHER_API_KEY')
