@@ -28,7 +28,7 @@ const Signup = () => {
 
     useEffect(() => {
         if (localStorage.getItem('token') !== null){
-            window.location.replace('https://synapse-test-demo4.herokuapp.com//dashboard');
+            window.location.replace('https://synapse-test-demo4.herokuapp.com/dashboard');
         } else {
             setLoading(false);
         }
@@ -43,7 +43,7 @@ const Signup = () => {
             password2: password2,
         };
 
-        fetch('http://127.0.0.1:8000/api/v1/users/auth/register/', {
+        fetch('https://synapse-test-demo4.herokuapp.com/api/v1/users/auth/register/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -55,7 +55,7 @@ const Signup = () => {
                 if(data.key) {
                     localStorage.clear();
                     localStorage.setItem('token', data.key);
-                    window.location.replace('https://synapse-test-demo4.herokuapp.com//dashboard');
+                    window.location.replace('https://synapse-test-demo4.herokuapp.com/dashboard');
                 } else {
                     enqueueSnackbar('Cannot Sign up with provided credentials.', {variant:"error"});
                     setEmail('');

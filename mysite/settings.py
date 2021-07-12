@@ -65,7 +65,7 @@ INSTALLED_APPS = [
 ]
 
 CORS_ALLOWED_ORIGINS = [
-    'http://localhost:8000'
+    'https://synapse-test-demo4.herokuapp.com/'
 ]
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',

@@ -28,9 +28,9 @@ const Dashboard = () => {
 
     useEffect(() => {
         if (localStorage.getItem('token') === null) {
-            window.location.replace('https://synapse-test-demo4.herokuapp.com//login');
+            window.location.replace('https://synapse-test-demo4.herokuapp.com/login');
         } else {
-            fetch('https://synapse-test-demo4.herokuapp.com//api/v1/users/auth/user/', {
+            fetch('https://synapse-test-demo4.herokuapp.com/api/v1/users/auth/user/', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
@@ -49,7 +49,7 @@ const Dashboard = () => {
     useEffect(() => {
         if (loading) {
             const loadingSnack = enqueueSnackbar('Loading Data...', {variant:"success"});
-            fetch('http://127.0.0.1:8000/api/v1/synapse/data/', {
+            fetch('https://synapse-test-demo4.herokuapp.com/api/v1/synapse/data/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -72,7 +72,7 @@ const Dashboard = () => {
     // Load Weather Data
     useEffect(() => {
         if (weatherLoading) {
-            fetch('http://127.0.0.1:8000/api/v1/synapse/weather/', {
+            fetch('https://synapse-test-demo4.herokuapp.com/api/v1/synapse/weather/', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

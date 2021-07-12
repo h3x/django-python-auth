@@ -23,7 +23,7 @@ const Logout = () => {
 
     useEffect(() => {
         if (localStorage.getItem('token') == null){
-            window.location.replace('https://synapse-test-demo4.herokuapp.com//login');
+            window.location.replace('https://synapse-test-demo4.herokuapp.com/login');
         } else {
             setLoading(false);
         }
@@ -32,7 +32,7 @@ const Logout = () => {
     const handleLogout = ev => {
         ev.preventDefault();
 
-        fetch('http://127.0.0.1:8000/api/v1/users/auth/logout/', {
+        fetch('https://synapse-test-demo4.herokuapp.com/api/v1/users/auth/logout/', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -42,7 +42,7 @@ const Logout = () => {
             .then( res => res.json())
             .then(data => {
                 localStorage.clear();
-                window.location.replace('https://synapse-test-demo4.herokuapp.com//login');
+                window.location.replace('https://synapse-test-demo4.herokuapp.com/login');
             });
     };
 
