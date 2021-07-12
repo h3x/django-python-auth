@@ -23,7 +23,7 @@ const Logout = () => {
 
     useEffect(() => {
         if (localStorage.getItem('token') == null){
-            window.location.replace('http://localhost:8000/login');
+            window.location.replace('https://synapse-test-demo4.herokuapp.com//login');
         } else {
             setLoading(false);
         }
@@ -42,7 +42,7 @@ const Logout = () => {
             .then( res => res.json())
             .then(data => {
                 localStorage.clear();
-                window.location.replace('http://localhost:8000/login');
+                window.location.replace('https://synapse-test-demo4.herokuapp.com//login');
             });
     };
 

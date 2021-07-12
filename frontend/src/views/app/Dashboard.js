@@ -28,9 +28,9 @@ const Dashboard = () => {
 
     useEffect(() => {
         if (localStorage.getItem('token') === null) {
-            window.location.replace('http://localhost:8000/login');
+            window.location.replace('https://synapse-test-demo4.herokuapp.com//login');
         } else {
-            fetch('http://localhost:8000/api/v1/users/auth/user/', {
+            fetch('https://synapse-test-demo4.herokuapp.com//api/v1/users/auth/user/', {
                 method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',

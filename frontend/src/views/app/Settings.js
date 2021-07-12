@@ -4,7 +4,7 @@ const Settings = () => {
 
         useEffect(() => {
             if (localStorage.getItem('token') === null) {
-                window.location.replace('http://localhost:8000/login');
+                window.location.replace('https://synapse-test-demo4.herokuapp.com//login');
             }
         }, [])
 
